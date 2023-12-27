@@ -214,8 +214,12 @@ function convertNumberToString(numberStr) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  for (let i = 0; i < str.length / 2; i += 1) {
+    if (str[i] !== str[str.length - i - 1]) return false;
+  }
+
+  return true;
 }
 
 /**
@@ -232,8 +236,14 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  let index;
+
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) index = i;
+  }
+
+  return index === undefined ? -1 : index;
 }
 
 /**
@@ -251,8 +261,14 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  const numStr = String(num);
+
+  for (let i = 0; i < numStr.length; i += 1) {
+    if (+numStr[i] === digit) return true;
+  }
+
+  return false;
 }
 
 /**
@@ -268,8 +284,22 @@ function isContainNumber(/* num, digit */) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  let leftSum = 0;
+  let rightSum = 0;
+
+  for (let i = 1; i < arr.length; i += 1) {
+    rightSum += arr[i];
+  }
+
+  for (let i = 0, j = 1; j < arr.length; i += 1, j += 1) {
+    rightSum -= arr[j];
+    leftSum += arr[i];
+
+    if (leftSum === rightSum) return i + 1;
+  }
+
+  return -1;
 }
 
 /**
@@ -293,8 +323,41 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const top = 0;
+  const bottom = size - 1;
+  const left = 0;
+  const right = size - 1;
+  const value = 1;
+  let i = 0;
+  let j = 0;
+  const result = [];
+
+  while (true) {
+    if (top + 1 > bottom) break;
+
+    for (j; j < right; j += 1) {
+      result[i][j] = value + 1;
+    }
+    if (right - 1 < size) break;
+
+    for (i; i < bottom; i += 1) {
+      result[i][j] = value + 1;
+    }
+    if (bottom - 1 < top) break;
+
+    for (j; j > left; j -= 1) {
+      result[i][j] = value + 1;
+    }
+    if (left + 1 > right) break;
+
+    for (i; i > top; i -= 1) {
+      result[i][j] = value + 1;
+    }
+  }
+
+  result[i][j] = value + 1;
+  return result;
 }
 
 /**
